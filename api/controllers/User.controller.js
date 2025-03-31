@@ -1,5 +1,6 @@
 import cloudinary from "../config/cloudinary.js";
 import { handleError } from "../helpers/handleError.js";
+import Blog from "../models/blog.model.js";
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 
@@ -76,15 +77,35 @@ export const getAllUser = async (req, res, next) => {
   }
 }
 
+// export const deleteUser = async (req, res, next) => {
+//   try {
+//       const { id } = req.params
+//       // const user = await User.findByIdAndDelete(id)
+//       await User.findByIdAndDelete(id)
+//       res.status(200).json({
+//           success: true,
+//           message: 'Data deleted.'
+//       })
+//   } catch (error) {
+//       next(handleError(500, error.message))
+//   }
+// }
+
 export const deleteUser = async (req, res, next) => {
   try {
-      const { id } = req.params
-      const user = await User.findByIdAndDelete(id)
+      const { id } = req.params;
+
+      // Prima eliminiamo tutti i blog scritti dall'utente
+      await Blog.deleteMany({ author: id });
+
+      // Poi eliminiamo l'utente
+      await User.findByIdAndDelete(id);
+
       res.status(200).json({
           success: true,
-          message: 'Data deleted.'
-      })
+          message: 'User and associated blogs deleted successfully.',
+      });
   } catch (error) {
-      next(handleError(500, error.message))
+      next(handleError(500, error.message));
   }
-}
+};
