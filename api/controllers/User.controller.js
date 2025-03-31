@@ -1,6 +1,7 @@
 import cloudinary from "../config/cloudinary.js";
 import { handleError } from "../helpers/handleError.js";
 import Blog from "../models/blog.model.js";
+import BlogLike from "../models/bloglike.model.js";
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 
@@ -100,6 +101,9 @@ export const deleteUser = async (req, res, next) => {
 
       // Eliminare tutti i commenti scritti dall'utente
       await Comment.deleteMany({ user: id });
+
+      // Eliminare tutti i like scritti dall'utente
+      await BlogLike.deleteMany({ user: id });
 
       // Poi eliminiamo l'utente
       await User.findByIdAndDelete(id);
