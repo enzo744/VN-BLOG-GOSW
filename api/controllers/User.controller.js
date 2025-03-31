@@ -98,12 +98,15 @@ export const deleteUser = async (req, res, next) => {
       // Prima eliminiamo tutti i blog scritti dall'utente
       await Blog.deleteMany({ author: id });
 
+      // Eliminare tutti i commenti scritti dall'utente
+      await Comment.deleteMany({ user: id });
+
       // Poi eliminiamo l'utente
       await User.findByIdAndDelete(id);
 
       res.status(200).json({
           success: true,
-          message: 'User and associated blogs deleted successfully.',
+          message: 'Eliminazione Utente e tutti i Blog e commenti ad esso associati.'
       });
   } catch (error) {
       next(handleError(500, error.message));
