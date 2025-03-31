@@ -2,6 +2,7 @@ import cloudinary from "../config/cloudinary.js";
 import { handleError } from "../helpers/handleError.js";
 import Blog from "../models/blog.model.js";
 import BlogLike from "../models/bloglike.model.js";
+import Comment from "../models/comment.model.js";
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 
