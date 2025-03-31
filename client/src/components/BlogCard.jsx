@@ -18,7 +18,7 @@ const BlogCard = ({ props }) => {
             <div className="flex justify-between items-center gap-2">
               <Avatar>
                 <AvatarImage
-                  src={props.author.avatar || usericon}
+                  src={props.author.avatar || usericon }
                   alt="avatar"
                 />
               </Avatar>
